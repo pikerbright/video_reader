@@ -41,10 +41,11 @@ bool VideoFile::getFrameByIdx(int idx, cv::Mat &frame) {
 }
 
 bool VideoFile::getFrameByTime(float offset, cv::Mat &frame) {
-    loader_.read_sequence_by_time(filename.c_str(), (int)offset*1000, 1);
+    int req_frame = get_req_frame_by_time(filename.c_str(), (int)offset*1000);
+    loader_.read_sequence(filename.c_str(), req_frame, 1);
     auto size = nvvl_video_size_from_file(filename.c_str());
     get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
-    current_frame++;
+    current_frame = req_frame + 1;
 }
 
 bool VideoFile::getNextFrame(cv::Mat &frame) {
