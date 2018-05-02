@@ -15,9 +15,15 @@ int main(int argc, char* argv[])
 
     cv::Mat frame;
     Size size;
-    video_file.readSequenceFrame(0, atoi(argv[2]), size);
+    int count = atoi(argv[2]);
+    video_file.readSequenceFrame(0, count, size);
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < count; i++)
+        video_file.getNextFrame(frame, size);
+
+    video_file.readSequenceFrame(50, count, size);
+
+    for(int i = 0; i < count; i++)
         video_file.getNextFrame(frame, size);
 
     video_file.close();
