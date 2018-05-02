@@ -13,6 +13,15 @@ include_directories(./include)
 include_directories(/usr/local/cuda-8.0/include)
 
 message(STATUS ${${PROJECT_NAME}_examples_src})
-cuda_add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_lib_src})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
+cuda_add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_lib_src} main.cpp cuda/utils.cu)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fPIC")
 target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LINKER_LIBS} nvvl nvcuvid cuda)
+
+set(WITH_OPENCV 1)
+
+if (WITH_OPENCV)
+    # If we are in here, they explicitly asked for it, so make it required
+    find_package(OpenCV CONFIG REQUIRED COMPONENTS core cudaarithm cudaimgproc imgcodecs)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_OPENCV=1)
+    target_link_libraries(${PROJECT_NAME} opencv_core ${OpenCV_LIBS})
+endif()
