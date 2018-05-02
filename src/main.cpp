@@ -14,6 +14,12 @@ int main(int argc, char* argv[])
     video_file.open(string(argv[1]));
 
     cv::Mat frame;
-    video_file.getFrameByIdx(0, frame);
+    Size size;
+    video_file.readSequenceFrame(0, argv[2], size);
+
+    for(int i = 0; i < 3; i++)
+        video_file.getNextFrame(frame, size);
+
+    video_file.close();
 }
 
