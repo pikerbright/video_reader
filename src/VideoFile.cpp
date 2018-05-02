@@ -40,10 +40,7 @@ bool VideoFile::getFrameByTime(float offset, cv::Mat &frame) {
 }
 
 bool VideoFile::getNextFrame(cv::Mat &frame) {
-    loader_.read_sequence(filename.c_str(), current_frame, 0);
-    auto size = nvvl_video_size_from_file(filename.c_str());
-    process_frames<uint8_t>(loader_, size.width, size.height, ColorSpace_RGB, false, false, false);
-    current_frame++;
+
 }
 
 double VideoFile::getVideoFPS() {
