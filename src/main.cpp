@@ -18,12 +18,12 @@ int main(int argc, char* argv[])
     video_file.readSequenceFrame(0, count);
 
     for(int i = 0; i < count; i++)
-        video_file.getNextFrame(frame, size);
+        video_file.getNextFrame(frame);
 
     video_file.readSequenceFrame(50, count);
 
     for(int i = 0; i < count; i++)
-        video_file.getNextFrame(frame, size);
+        video_file.getNextFrame(frame);
 
     video_file.close();
 }
