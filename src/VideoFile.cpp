@@ -18,7 +18,7 @@ using namespace ATVIDEO;
 using PictureSequence = NVVL::PictureSequence;
 constexpr auto sequence_count = uint16_t{4};
 
-VideoFile::VideoFile() : loader_(0, LogLevel_Debug), current_frame(0), is_open(false) {
+VideoFile::VideoFile() : loader_(0, LogLevel_Debug), is_open(false) {
 }
 
 VideoFile::~VideoFile() {
@@ -27,6 +27,7 @@ VideoFile::~VideoFile() {
 
 bool VideoFile::open(string path) {
     filename = path;
+    size = nvvl_video_size_from_file(filename.c_str());
     is_open = true;
 }
 
@@ -39,9 +40,7 @@ bool VideoFile::getFrameByIdx(int idx, cv::Mat &frame) {
         return false;
 
     loader_.read_sequence(filename.c_str(), idx, 1);
-    auto size = nvvl_video_size_from_file(filename.c_str());
     get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
-    current_frame = idx + 1;
     return true;
 }
 
@@ -51,13 +50,11 @@ bool VideoFile::getFrameByTime(float offset, cv::Mat &frame) {
 
     int req_frame = nvvl_get_req_frame_by_time(filename.c_str(), (int)offset*1000);
     loader_.read_sequence(filename.c_str(), req_frame, 1);
-    auto size = nvvl_video_size_from_file(filename.c_str());
     get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
-    current_frame = req_frame + 1;
     return true;
 }
 
-bool VideoFile::getNextFrame(cv::Mat &frame, Size& size) {
+bool VideoFile::getNextFrame(cv::Mat &frame) {
     if (!is_open)
         return false;
 
@@ -66,13 +63,11 @@ bool VideoFile::getNextFrame(cv::Mat &frame, Size& size) {
     return true;
 }
 
-bool VideoFile::readSequenceFrame(int idx, int count, Size& size) {
+bool VideoFile::readSequenceFrame(int idx, int count) {
     if (!is_open)
         return false;
 
-    size = nvvl_video_size_from_file(filename.c_str());
     loader_.read_sequence(filename.c_str(), idx, count);
-    current_frame += count;
     return true;
 }
 

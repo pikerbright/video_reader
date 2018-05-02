@@ -28,16 +28,16 @@ namespace ATVIDEO {
 
         virtual bool getFrameByTime(float offset, cv::Mat &frame);
 
-        virtual bool getNextFrame(cv::Mat &frame, Size& size);
+        virtual bool getNextFrame(cv::Mat &frame);
 
-        virtual bool readSequenceFrame(int idx, int count, Size& size);
+        virtual bool readSequenceFrame(int idx, int count);
 
         virtual double getVideoFPS();
 
     private:
         NVVL::VideoLoader loader_;
         string filename;
-        int current_frame;
+        Size size;
         bool is_open;
     };
 }
