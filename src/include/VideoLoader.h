@@ -95,6 +95,9 @@ struct Size nvvl_video_size(VideoLoaderHandle loader);
  */
 int nvvl_frame_count(VideoLoaderHandle loader, const char* filename);
 
+
+int get_req_frame_by_time(const char* filename, int ms_time);
+
 /**
  * Wrapper for VideoLoader::read_sequence()
  */
@@ -182,8 +185,6 @@ class VideoLoader {
      * \param count the number of frames to read
      */
     void read_sequence(std::string filename, int frame, int count=1);
-
-    void read_sequence_by_time(std::string filename, int ms_time, int count=1);
 
     /**
      * Enqueue the reading and decoding of video frames from a stream.
