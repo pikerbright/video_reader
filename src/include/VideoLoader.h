@@ -183,6 +183,8 @@ class VideoLoader {
      */
     void read_sequence(std::string filename, int frame, int count=1);
 
+    void read_sequence_by_time(std::string filename, int ms_time, int count=1);
+
     /**
      * Enqueue the reading and decoding of video frames from a stream.
      * \param filename path to the video stream

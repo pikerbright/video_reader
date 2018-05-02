@@ -22,6 +22,8 @@ namespace ATVIDEO {
 
         bool open(string path) override ;
 
+        void close() override ;
+
         virtual bool getFrameByIdx(int idx, cv::Mat &frame);
 
         virtual bool getFrameByTime(float offset, cv::Mat &frame);
@@ -33,6 +35,7 @@ namespace ATVIDEO {
     private:
         NVVL::VideoLoader loader_;
         string filename;
+        int current_frame;
     };
 }
 #endif //STREAM_VIDEOFILE_H

@@ -15,6 +15,8 @@ namespace ATVIDEO {
     public:
         virtual bool open(string path) = 0;
 
+        virtual void close() = 0;
+
         virtual double getVideoFPS() = 0;
     };
 }
