@@ -10,7 +10,7 @@ endif()
 find_package(CUDA REQUIRED)
 
 include_directories(./include)
-include_directories(/usr/local/cuda-8.0/include)
+include_directories(${CUDA_INCLUDE_DIRS})
 
 message(STATUS ${${PROJECT_NAME}_examples_src})
 cuda_add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_lib_src} main.cpp cuda/utils.cu)
