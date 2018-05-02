@@ -131,4 +131,11 @@ void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t h
     get_frame_data<T>(s, frame);
 }
 
+void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
+               NVVL::ColorSpace color_space,
+               bool scale, bool normalized, bool flip,
+               NVVL::ScaleMethod scale_method)
+{
+    get_frame<uint8_t>(loader, frame, width, height, color_space, scale, normalized, flip, scale_method);
+}
 

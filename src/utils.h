@@ -17,24 +17,6 @@
 
 using PictureSequence = NVVL::PictureSequence;
 
-template<typename T>
-T* new_data(size_t* pitch, size_t width, size_t height);
-
-template<typename T>
-auto get_data(size_t* ret_pitch, size_t width, size_t height);
-
-template<typename T>
-cv::cuda::GpuMat get_pixels(const PictureSequence& sequence, int index,
-                            std::initializer_list<int> channel_order);
-
-template<>
-cv::cuda::GpuMat get_pixels<half>(const PictureSequence& sequence, int index,
-                                  std::initializer_list<int> channel_order);
-
-template<typename T>
-void write_frame(const PictureSequence& sequence);
-
-template<typename T>
 void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
                NVVL::ColorSpace color_space = ColorSpace_RGB,
                bool scale = false, bool normalized = false, bool flip = false,
