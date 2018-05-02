@@ -14,14 +14,13 @@ int main(int argc, char* argv[])
     video_file.open(string(argv[1]));
 
     cv::Mat frame;
-    Size size;
     int count = atoi(argv[2]);
-    video_file.readSequenceFrame(0, count, size);
+    video_file.readSequenceFrame(0, count);
 
     for(int i = 0; i < count; i++)
         video_file.getNextFrame(frame, size);
 
-    video_file.readSequenceFrame(50, count, size);
+    video_file.readSequenceFrame(50, count);
 
     for(int i = 0; i < count; i++)
         video_file.getNextFrame(frame, size);
