@@ -13,6 +13,9 @@
 
 using PictureSequence = NVVL::PictureSequence;
 
+constexpr auto scale_width = int16_t{1280/2};
+constexpr auto scale_height = int16_t{720/2};
+
 template<typename T>
 T* new_data(size_t* pitch, size_t width, size_t height) {
     T* data;
