@@ -11,6 +11,11 @@
 # include <opencv2/cudaimgproc.hpp>
 # include <opencv2/cudaarithm.hpp>
 #include <cuda.h>
+#include "PictureSequence.h"
+#include "PictureSequence.h"
+#include "cuda/utils.h"
+
+using PictureSequence = NVVL::PictureSequence;
 
 template<typename T>
 T* new_data(size_t* pitch, size_t width, size_t height);
