@@ -96,7 +96,7 @@ struct Size nvvl_video_size(VideoLoaderHandle loader);
 int nvvl_frame_count(VideoLoaderHandle loader, const char* filename);
 
 
-int get_req_frame_by_time(const char* filename, int ms_time);
+int nvvl_get_req_frame_by_time(const char* filename, int ms_time);
 
 /**
  * Wrapper for VideoLoader::read_sequence()
