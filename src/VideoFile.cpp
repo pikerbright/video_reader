@@ -71,7 +71,7 @@ bool VideoFile::readSequenceFrame(int idx, int count, Size& size) {
         return false;
 
     size = nvvl_video_size_from_file(filename.c_str());
-    loader_.read_sequence(filename.c_str(), current_frame, count);
+    loader_.read_sequence(filename.c_str(), idx, count);
     current_frame += count;
     return true;
 }
