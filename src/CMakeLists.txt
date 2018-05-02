@@ -9,8 +9,6 @@ endif()
 
 find_package(CUDA REQUIRED)
 
-set(CUDA_LIBRARIES PUBLIC ${CUDA_LIBRARIES})
-
 include_directories(./include)
 include_directories(/usr/local/cuda-8.0/include)
 
