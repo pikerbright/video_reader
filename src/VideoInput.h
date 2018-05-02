@@ -13,7 +13,7 @@ using namespace std;
 namespace ATVIDEO {
     class IVideoInput {
     public:
-        virtual bool open(string path, string type) = 0;
+        virtual bool open(string path) = 0;
 
         virtual double getVideoFPS() = 0;
     };

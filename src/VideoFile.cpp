@@ -25,7 +25,7 @@ VideoFile::~VideoFile() {
     loader_.finish();
 }
 
-bool VideoFile::open(string path, string type) {
+bool VideoFile::open(string path) {
     filename = path;
 }
 

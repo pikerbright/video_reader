@@ -20,7 +20,7 @@ namespace ATVIDEO {
 
         virtual ~VideoFile();
 
-        bool open(string path, string type) override ;
+        bool open(string path) override ;
 
         virtual bool getFrameByIdx(int idx, cv::Mat &frame);
 

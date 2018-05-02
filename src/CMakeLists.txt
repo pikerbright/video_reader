@@ -16,4 +16,5 @@ include_directories(/usr/local/cuda-8.0/include)
 
 message(STATUS ${${PROJECT_NAME}_examples_src})
 cuda_add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_lib_src})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LINKER_LIBS} nvvl nvcuvid cuda)
