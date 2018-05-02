@@ -5,6 +5,7 @@
 #ifndef PROJECT_STREAM_HPP
 #define PROJECT_STREAM_HPP
 
+#include <memory>
 #include "opencv2/opencv.hpp"
 
 using namespace std;
