@@ -102,9 +102,9 @@ void get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
 
 template<typename T>
 void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
-               NVVL::ColorSpace color_space = ColorSpace_RGB,
-               bool scale = false, bool normalized = false, bool flip = false,
-               NVVL::ScaleMethod scale_method = ScaleMethod_Linear)
+               NVVL::ColorSpace color_space,
+               bool scale, bool normalized, bool flip,
+               NVVL::ScaleMethod scale_method)
 {
     auto s = PictureSequence{1};
 

@@ -21,7 +21,7 @@ template<typename T>
 T* new_data(size_t* pitch, size_t width, size_t height);
 
 template<typename T>
-T* get_data(size_t* ret_pitch, size_t width, size_t height);
+auto get_data(size_t* ret_pitch, size_t width, size_t height);
 
 template<typename T>
 cv::cuda::GpuMat get_pixels(const PictureSequence& sequence, int index,
