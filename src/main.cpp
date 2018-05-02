@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     VideoFile video_file;
-    video_file.open(string(argv));
+    video_file.open(string(argv[1]));
 
     cv::Mat frame;
     video_file.getFrameByIdx(0, frame);
