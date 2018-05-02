@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     cv::Mat frame;
     Size size;
-    video_file.readSequenceFrame(0, argv[2], size);
+    video_file.readSequenceFrame(0, atoi(argv[2]), size);
 
     for(int i = 0; i < 3; i++)
         video_file.getNextFrame(frame, size);
