@@ -4,6 +4,7 @@
 
 #ifndef STREAM_VIDEOFILE_H
 #define STREAM_VIDEOFILE_H
+#include <cstdint>
 #include <iostream>
 #include "opencv2/opencv.hpp"
 
@@ -19,7 +20,7 @@ namespace ATVIDEO {
 
         virtual ~VideoFile();
 
-        virtual bool open(string path, string type);
+        bool open(string path, string type) override ;
 
         virtual bool getFrameByIdx(int idx, cv::Mat &frame);
 
@@ -31,7 +32,6 @@ namespace ATVIDEO {
 
     private:
         NVVL::VideoLoader loader_;
-        uint32_t current_frame;
         string filename;
     };
 }

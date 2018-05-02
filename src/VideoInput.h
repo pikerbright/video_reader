@@ -15,12 +15,6 @@ namespace ATVIDEO {
     public:
         virtual bool open(string path, string type) = 0;
 
-        virtual bool getFrameByIdx(int idx, cv::Mat &frame) = 0;
-
-        virtual bool getFrameByTime(float offset, cv::Mat &frame) = 0;
-
-        virtual bool getNextFrame(cv::Mat &frame) = 0;
-
         virtual double getVideoFPS() = 0;
     };
 }
