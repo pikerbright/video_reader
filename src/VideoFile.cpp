@@ -41,8 +41,9 @@ namespace ATVIDEO {
             return false;
 
         loader_.read_sequence(filename.c_str(), idx, 1);
-        get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
-        return true;
+        bool ret = get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
+
+        return ret;
     }
 
     bool VideoFile::getFrameByTime(float offset, cv::Mat &frame) {
@@ -51,8 +52,9 @@ namespace ATVIDEO {
 
         int req_frame = nvvl_get_req_frame_by_time(filename.c_str(), (int) offset * 1000);
         loader_.read_sequence(filename.c_str(), req_frame, 1);
-        get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
-        return true;
+        bool ret = get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
+
+        return ret;
     }
 
     bool VideoFile::getNextFrame(cv::Mat &frame) {
