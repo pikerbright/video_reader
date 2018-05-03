@@ -59,9 +59,9 @@ namespace ATVIDEO {
         if (!is_open)
             return false;
 
-        get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
+        bool ret = get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
 
-        return true;
+        return ret;
     }
 
     bool VideoFile::readSequenceFrame(int idx, int count) {

@@ -19,16 +19,9 @@ int main(int argc, char* argv[])
     video_file.readSequenceFrame(0, count);
 
     for(int i = 0; i < count; i++) {
-        video_file.getNextFrame(frame);
+        if (!video_file.getNextFrame(frame))
+            break;
         sprintf(output_file,"./output/%05d.jpg",i);
-        cv::imwrite(output_file,frame);
-    }
-
-    video_file.readSequenceFrame(50, count);
-
-    for(int i = 0; i < count; i++) {
-        video_file.getNextFrame(frame);
-        sprintf(output_file,"./output/%05d.jpg", 50 + i);
         cv::imwrite(output_file,frame);
     }
 

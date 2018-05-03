@@ -76,9 +76,13 @@ cv::cuda::GpuMat get_pixels<half>(const PictureSequence& sequence, int index,
 }
 
 template<typename T>
-void get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
+bool get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
     auto frame_nums = sequence.get_meta<int>("frame_num");
-    std::cout << "frame_nums " << frame_nums[0] << std::endl;
+    int ret_frame = frame_nums[0];
+    if (ret_frame < 0) {
+        std::cout << "reach stream end" << std::endl;
+        return false;
+    }
     for (int i = 0; i < sequence.count(); ++i) {
         auto pixels = sequence.get_layer<T>("data", i);
 
@@ -93,10 +97,12 @@ void get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
         //cv::Mat host_bgr;
         gpu_bgr.download(frame);
     }
+
+    return true;
 }
 
 template<typename T>
-void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
+bool get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
                NVVL::ColorSpace color_space,
                bool scale, bool normalized, bool flip,
                NVVL::ScaleMethod scale_method)
@@ -123,15 +129,15 @@ void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t h
     s.set_layer("data", pixels);
 
     loader.receive_frames_sync(s);
-    get_frame_data<T>(s, frame);
+    return get_frame_data<T>(s, frame);
 }
 
-void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
+bool get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
                NVVL::ColorSpace color_space,
                bool scale, bool normalized, bool flip,
                NVVL::ScaleMethod scale_method)
 {
-    get_frame<uint8_t>(loader, frame, width, height, color_space,
+    return get_frame<uint8_t>(loader, frame, width, height, color_space,
                        scale, normalized, flip, scale_method);
 }
 
