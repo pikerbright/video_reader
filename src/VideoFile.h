@@ -9,7 +9,6 @@
 #include "opencv2/opencv.hpp"
 
 #include "VideoLoader.h"
-#include "VideoInput.h"
 
 using namespace std;
 
