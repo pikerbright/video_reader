@@ -23,7 +23,7 @@ namespace ATVIDEO {
     }
 
     VideoFile::~VideoFile() {
-        loader_.finish();
+        close();
     }
 
     bool VideoFile::open(string path) {
