@@ -78,6 +78,7 @@ cv::cuda::GpuMat get_pixels<half>(const PictureSequence& sequence, int index,
 template<typename T>
 void get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
     auto frame_nums = sequence.get_meta<int>("frame_num");
+    std::cout << "frame_nums " << frame_nums[0] << std::endl;
     for (int i = 0; i < sequence.count(); ++i) {
         auto pixels = sequence.get_layer<T>("data", i);
 
