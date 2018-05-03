@@ -91,12 +91,6 @@ void get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
 
         //cv::Mat host_bgr;
         gpu_bgr.download(frame);
-
-        char output_file[256];
-        auto frame_num = frame_nums[i];
-        sprintf(output_file,"./output/%05d.jpg",frame_num);
-        cv::imwrite(output_file,frame);
-        std::cout << "Wrote frame " << frame_num << " " << output_file << std::endl;
     }
 }
 
