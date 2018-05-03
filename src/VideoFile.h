@@ -14,25 +14,25 @@
 using namespace std;
 
 namespace ATVIDEO {
-    class VideoFile : public IVideoInput {
+    class VideoFile {
     public:
         VideoFile();
 
         virtual ~VideoFile();
 
-        bool open(string path) override ;
+        bool open(string path);
 
-        void close() override ;
+        void close();
 
-        virtual bool getFrameByIdx(int idx, cv::Mat &frame);
+        bool getFrameByIdx(int idx, cv::Mat &frame);
 
-        virtual bool getFrameByTime(float offset, cv::Mat &frame);
+        bool getFrameByTime(float offset, cv::Mat &frame);
 
-        virtual bool getNextFrame(cv::Mat &frame);
+        bool getNextFrame(cv::Mat &frame);
 
-        virtual bool readSequenceFrame(int idx, int count);
+        bool readSequenceFrame(int idx, int count);
 
-        virtual double getVideoFPS();
+        double getVideoFPS();
 
     private:
         NVVL::VideoLoader loader_;

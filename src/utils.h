@@ -12,10 +12,7 @@
 # include <opencv2/cudaarithm.hpp>
 #include <cuda.h>
 #include "PictureSequence.h"
-#include "PictureSequence.h"
 #include "cuda/utils.h"
-
-using PictureSequence = NVVL::PictureSequence;
 
 void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
                NVVL::ColorSpace color_space = ColorSpace_RGB,
