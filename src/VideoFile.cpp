@@ -14,37 +14,67 @@
 #include "cuda/utils.h"
 #include "utils.h"
 
-using namespace ATVIDEO;
 using PictureSequence = NVVL::PictureSequence;
 constexpr auto sequence_count = uint16_t{4};
 
-VideoFile::VideoFile() : loader_(0, LogLevel_Debug), current_frame(0) {
-}
+namespace ATVIDEO {
 
-VideoFile::~VideoFile() {
-    loader_.finish();
-}
+    VideoFile::VideoFile() : loader_(0, LogLevel_Debug), is_open(false) {
+    }
 
-bool VideoFile::open(string path, string type) {
-    filename = path;
-}
+    VideoFile::~VideoFile() {
+        loader_.finish();
+    }
 
-bool VideoFile::getFrameByIdx(int idx, cv::Mat &frame) {
+    bool VideoFile::open(string path) {
+        filename = path;
+        size = nvvl_video_size_from_file(filename.c_str());
+        is_open = true;
+    }
 
-}
+    void VideoFile::close() {
+        loader_.finish();
+    }
 
-bool VideoFile::getFrameByTime(float offset, cv::Mat &frame) {
+    bool VideoFile::getFrameByIdx(int idx, cv::Mat &frame) {
+        if (!is_open)
+            return false;
 
-}
+        loader_.read_sequence(filename.c_str(), idx, 1);
+        get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
+        return true;
+    }
 
-bool VideoFile::getNextFrame(cv::Mat &frame) {
-    loader_.read_sequence(filename.c_str(), current_frame, 0);
-    auto size = nvvl_video_size_from_file(filename.c_str());
-    process_frames<uint8_t>(loader_, size.width, size.height, ColorSpace_RGB, false, false, false);
-    current_frame++;
-}
+    bool VideoFile::getFrameByTime(float offset, cv::Mat &frame) {
+        if (!is_open)
+            return false;
 
-double VideoFile::getVideoFPS() {
+        int req_frame = nvvl_get_req_frame_by_time(filename.c_str(), (int) offset * 1000);
+        loader_.read_sequence(filename.c_str(), req_frame, 1);
+        get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
+        return true;
+    }
+
+    bool VideoFile::getNextFrame(cv::Mat &frame) {
+        if (!is_open)
+            return false;
+
+        get_frame(loader_, frame, size.width, size.height, ColorSpace_RGB, false, false, false);
+
+        return true;
+    }
+
+    bool VideoFile::readSequenceFrame(int idx, int count) {
+        if (!is_open)
+            return false;
+
+        loader_.read_sequence(filename.c_str(), idx, count);
+        return true;
+    }
+
+    double VideoFile::getVideoFPS() {
+
+    }
 
 }
 

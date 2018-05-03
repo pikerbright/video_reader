@@ -12,7 +12,9 @@
 #include "utils.h"
 
 using PictureSequence = NVVL::PictureSequence;
-constexpr auto sequence_count = uint16_t{1};
+
+constexpr auto scale_width = int16_t{1280/2};
+constexpr auto scale_height = int16_t{720/2};
 
 template<typename T>
 T* new_data(size_t* pitch, size_t width, size_t height) {
@@ -28,7 +30,7 @@ template<typename T>
 auto get_data(size_t* ret_pitch, size_t width, size_t height) {
     static size_t pitch;
     static auto data = std::unique_ptr<T, decltype(&cudaFree)>{
-            new_data<T>(&pitch, width, height * sequence_count * 3),
+            new_data<T>(&pitch, width, height * 1 * 3),
             cudaFree};
     *ret_pitch = pitch / sizeof(T);
     //std::cout << "get data " << width << " " << height << " " << *ret_pitch << std::endl;
@@ -74,7 +76,7 @@ cv::cuda::GpuMat get_pixels<half>(const PictureSequence& sequence, int index,
 }
 
 template<typename T>
-void write_frame(const PictureSequence& sequence) {
+void get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
     auto frame_nums = sequence.get_meta<int>("frame_num");
     for (int i = 0; i < sequence.count(); ++i) {
         auto pixels = sequence.get_layer<T>("data", i);
@@ -87,27 +89,28 @@ void write_frame(const PictureSequence& sequence) {
             cv::cuda::cvtColor(gpu_yuv, gpu_bgr, CV_YCrCb2BGR);
         }
 
-        cv::Mat host_bgr;
-        gpu_bgr.download(host_bgr);
+        //cv::Mat host_bgr;
+        gpu_bgr.download(frame);
 
         char output_file[256];
         auto frame_num = frame_nums[i];
         sprintf(output_file,"./output/%05d.jpg",frame_num);
-        cv::imwrite(output_file,host_bgr);
+        cv::imwrite(output_file,frame);
         std::cout << "Wrote frame " << frame_num << " " << output_file << std::endl;
     }
 }
 
 template<typename T>
-void process_frames(NVVL::VideoLoader& loader, size_t width, size_t height, NVVL::ColorSpace color_space,
-                    bool scale, bool normalized, bool flip,
-                    NVVL::ScaleMethod scale_method = ScaleMethod_Linear)
+void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
+               NVVL::ColorSpace color_space,
+               bool scale, bool normalized, bool flip,
+               NVVL::ScaleMethod scale_method)
 {
-    auto s = PictureSequence{sequence_count};
+    auto s = PictureSequence{1};
 
     auto pixels = PictureSequence::Layer<T>{};
     pixels.data = get_data<T>(&pixels.desc.stride.y, width, height);
-    pixels.desc.count = sequence_count;
+    pixels.desc.count = 1;
     pixels.desc.channels = 3;
     pixels.desc.width = width;
     pixels.desc.height = height;
@@ -125,7 +128,15 @@ void process_frames(NVVL::VideoLoader& loader, size_t width, size_t height, NVVL
     s.set_layer("data", pixels);
 
     loader.receive_frames_sync(s);
-    write_frame<T>(s);
+    get_frame_data<T>(s, frame);
 }
 
+void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
+               NVVL::ColorSpace color_space,
+               bool scale, bool normalized, bool flip,
+               NVVL::ScaleMethod scale_method)
+{
+    get_frame<uint8_t>(loader, frame, width, height, color_space,
+                       scale, normalized, flip, scale_method);
+}
 
