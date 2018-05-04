@@ -14,7 +14,7 @@
 #include "PictureSequence.h"
 #include "cuda/utils.h"
 
-void get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
+bool get_frame(NVVL::VideoLoader& loader, cv::Mat &frame, size_t width, size_t height,
                NVVL::ColorSpace color_space = ColorSpace_RGB,
                bool scale = false, bool normalized = false, bool flip = false,
                NVVL::ScaleMethod scale_method = ScaleMethod_Linear);
