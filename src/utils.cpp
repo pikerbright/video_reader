@@ -80,9 +80,9 @@ bool get_frame_data(const PictureSequence& sequence, cv::Mat &frame) {
     auto frame_nums = sequence.get_meta<int>("frame_num");
     int ret_frame = frame_nums[0];
     if (ret_frame < 0) {
-        std::cout << "reach stream end" << std::endl;
         return false;
     }
+
     for (int i = 0; i < sequence.count(); ++i) {
         auto pixels = sequence.get_layer<T>("data", i);
 
