@@ -92,7 +92,10 @@ namespace ATVIDEO {
     }
 
     double VideoFile::getVideoFPS() {
+        if (!is_open)
+            throw std::runtime_error(std::string("Video file is not open yet"));
 
+        return nvvl_video_fps_from_file(filename.c_str());
     }
 
     int VideoFile::getVideoFrameCount() {
