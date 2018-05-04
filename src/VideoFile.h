@@ -17,6 +17,8 @@ namespace ATVIDEO {
     public:
         VideoFile();
 
+        VideoFile(string path);
+
         virtual ~VideoFile();
 
         bool open(string path);
@@ -32,6 +34,8 @@ namespace ATVIDEO {
         bool readSequenceFrame(int idx, int count);
 
         double getVideoFPS();
+
+        int getVideoFrameCount();
 
     private:
         NVVL::VideoLoader loader_;
