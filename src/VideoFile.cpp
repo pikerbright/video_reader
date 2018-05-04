@@ -22,14 +22,31 @@ namespace ATVIDEO {
     VideoFile::VideoFile() : loader_(0, LogLevel_Debug), is_open(false) {
     }
 
+    VideoFile::VideoFile(string path) : loader_(0, LogLevel_Debug),
+                                        is_open(false) {
+        filename = path;
+        size = nvvl_video_size_from_file(filename.c_str());
+        is_open = true;
+    }
+
     VideoFile::~VideoFile() {
         close();
     }
 
     bool VideoFile::open(string path) {
-        filename = path;
-        size = nvvl_video_size_from_file(filename.c_str());
-        is_open = true;
+        if (!is_open) {
+            try {
+                filename = path;
+                size = nvvl_video_size_from_file(filename.c_str());
+                is_open = true;
+            }
+            catch (exception& e) {
+                cout << e.what() << endl;
+                return false;
+            }
+        }
+
+        return true;
     }
 
     void VideoFile::close() {
@@ -76,6 +93,13 @@ namespace ATVIDEO {
 
     double VideoFile::getVideoFPS() {
 
+    }
+
+    int VideoFile::getVideoFrameCount() {
+        if (!is_open)
+            throw std::runtime_error(std::string("Video file is not open yet"));
+
+        return nvvl_video_frame_count_from_file(filename.c_str());
     }
 
 }
