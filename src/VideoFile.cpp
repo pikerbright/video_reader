@@ -99,7 +99,7 @@ namespace ATVIDEO {
         if (!is_open)
             throw std::runtime_error(std::string("Video file is not open yet"));
 
-        return loader_.nvvl_video_frame_count_from_file(filename.c_str());
+        return nvvl_video_frame_count_from_file(filename.c_str());
     }
 
 }
