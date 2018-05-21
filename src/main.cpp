@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     video_stream.readStream();
 
-    for(int i = 0; i < count; i++) {
+    for(int i = 0; i < 200; i++) {
         if (!video_stream.getNextFrame(frame))
             break;
         sprintf(output_file,"./output/%05d.jpg",i);
