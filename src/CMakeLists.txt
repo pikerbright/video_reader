@@ -1,5 +1,5 @@
 file(GLOB_RECURSE tmp *.cpp *.hpp)
-set(${PROJECT_NAME}_lib_src ${${PROJECT_NAME}_lib_src} ${tmp} VideoFile.h VideoFile.cpp utils.h utils.cpp)
+set(${PROJECT_NAME}_lib_src ${${PROJECT_NAME}_lib_src} ${tmp} VideoFile.cpp VideoStream.cpp utils.cpp)
 
 list(APPEND CUDA_NVCC_FLAGS "-std=c++11")
 
