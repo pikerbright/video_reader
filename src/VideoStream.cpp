@@ -48,7 +48,7 @@ namespace ATVIDEO {
         return ret;
     }
 
-    bool VideoStream::readStream(int idx, int count) {
+    bool VideoStream::readStream() {
         if (!is_open)
             return false;
 

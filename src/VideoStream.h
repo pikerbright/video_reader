@@ -1,6 +1,7 @@
 #ifndef STREAM_VIDEOSTREAM_H
 #define STREAM_VIDEOSTREAM_H
-
+#include <iostream>
+#include "opencv2/opencv.hpp"
 #include "VideoLoader.h"
 
 using namespace std;
