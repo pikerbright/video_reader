@@ -1,5 +1,6 @@
 #include "VideoLoader.h"
 #include "VideoStream.h"
+#include "utils.h"
 
 using PictureSequence = NVVL::PictureSequence;
 
