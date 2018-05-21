@@ -3,13 +3,14 @@
 //
 #include <string>
 #include "VideoFile.h"
-
+#include "VideoStream.h"
 
 using namespace ATVIDEO;
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+    /*
     VideoFile video_file;
     video_file.open(string(argv[1]));
     char output_file[256];
@@ -26,5 +27,18 @@ int main(int argc, char* argv[])
     }
 
     video_file.close();
+     */
+
+    VideoStream video_stream("rtmp://live.hkstv.hk.lxdns.com/live/hks");
+    cv::Mat frame;
+
+    video_stream.readStream();
+
+    for(int i = 0; i < count; i++) {
+        if (!video_stream.getNextFrame(frame))
+            break;
+        sprintf(output_file,"./output/%05d.jpg",i);
+        cv::imwrite(output_file,frame);
+    }
 }
 
