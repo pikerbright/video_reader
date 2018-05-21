@@ -31,6 +31,7 @@ int main(int argc, char* argv[])
 
     VideoStream video_stream("rtmp://live.hkstv.hk.lxdns.com/live/hks");
     cv::Mat frame;
+    char output_file[256];
 
     video_stream.readStream();
 
