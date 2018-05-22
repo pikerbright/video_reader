@@ -15,7 +15,6 @@
 #include "utils.h"
 
 using PictureSequence = NVVL::PictureSequence;
-constexpr auto sequence_count = uint16_t{4};
 
 namespace ATVIDEO {
 
